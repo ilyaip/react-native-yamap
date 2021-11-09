@@ -1,8 +1,8 @@
 import React from 'react';
-import { requireNativeComponent, Platform, ImageSourcePropType } from 'react-native';
+import {requireNativeComponent, Platform, ImageSourcePropType} from 'react-native';
 // @ts-ignore
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
-import { Point } from '../interfaces';
+import {Point} from '../interfaces';
 
 export interface MarkerProps {
   children?: React.ReactElement;
@@ -12,34 +12,29 @@ export interface MarkerProps {
   point: Point;
   source?: ImageSourcePropType;
   anchor?: { x: number, y: number };
+  id?: number
 }
 
 const NativeMarkerComponent = requireNativeComponent<MarkerProps & { pointerEvents: 'none' }>('YamapMarker');
 
 interface State {
   recreateKey: boolean;
-  children: any;
+  props: MarkerProps;
 }
 
 export class Marker extends React.Component<MarkerProps, State> {
   state = {
     recreateKey: false,
-    children: this.props.children,
+    props: this.props,
   };
 
   static getDerivedStateFromProps(nextProps: MarkerProps, prevState: State): Partial<State> {
-    if (Platform.OS === 'ios') {
-      return {
-        children: nextProps.children,
-        recreateKey:
-          nextProps.children === prevState.children
-            ? prevState.recreateKey
-            : !prevState.recreateKey,
-      };
-    }
     return {
-      children: nextProps.children,
-      recreateKey: Boolean(nextProps.children),
+      props: nextProps,
+      recreateKey:
+        nextProps.toString() === prevState.props.toString()
+          ? prevState.recreateKey
+          : !prevState.recreateKey,
     };
   }
 
@@ -56,11 +51,11 @@ export class Marker extends React.Component<MarkerProps, State> {
 
   render() {
     return (
-      <NativeMarkerComponent
-        {...this.getProps()}
-        key={String(this.state.recreateKey)}
-        pointerEvents='none'
-      />
+        <NativeMarkerComponent
+          {...this.getProps()}
+          pointerEvents='none'
+          key={this.props.id || String(this.state.recreateKey)}
+        />
     );
   }
 }
