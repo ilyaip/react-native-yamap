@@ -104,13 +104,25 @@ public class YamapMarker extends ReactViewGroup implements MapObjectTapListener,
                     e.printStackTrace();
                 }
             }
-            if (childs.size() == 0) {
-                if (!iconSource.equals("")) {
+            if (childs.size() == 0 && !iconSource.equals("") && !iconSource.equals(lastIconSource)) {
+                if (!iconSource.contains("http://") && !iconSource.contains("https://")) {
+                    try {
+                        lastIconSource = iconSource;
+                        int id = getContext().getResources().getIdentifier(iconSource, "drawable", getContext().getPackageName());
+                        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), id);
+                        mapObject.setIcon(ImageProvider.fromBitmap(bitmap));
+                        iconStyle.setScale(scale);
+                        mapObject.setIconStyle(iconStyle);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
                     ImageLoader.DownloadImageBitmap(getContext(), iconSource, new Callback<Bitmap>() {
                         @Override
                         public void invoke(Bitmap bitmap) {
                             try {
                                 if (mapObject != null) {
+                                    lastIconSource = iconSource;
                                     mapObject.setIcon(ImageProvider.fromBitmap(bitmap));
                                     iconStyle.setScale(scale);
                                     mapObject.setIconStyle(iconStyle);
