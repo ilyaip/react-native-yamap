@@ -50,7 +50,6 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
 
     public Map getExportedCustomBubblingEventTypeConstants() {
         return MapBuilder.builder()
-                .put("routes", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onRouteFound")))
                 .put("cameraPosition", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onCameraPositionReceived")))
                 .put("cameraPositionChanged", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onCameraPositionChange")))
                 .put("onMapPress", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onMapPress")))
@@ -66,8 +65,6 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
                 SET_CENTER,
                 "fitAllMarkers",
                 FIT_ALL_MARKERS,
-                "findRoutes",
-                FIND_ROUTES,
                 "setZoom",
                 SET_ZOOM,
                 "getCameraPosition",
@@ -89,11 +86,6 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
                 return;
             case "fitAllMarkers":
                 fitAllMarkers(view);
-                return;
-            case "findRoutes":
-                if (args != null) {
-                    findRoutes(view, args.getArray(0), args.getArray(1), args.getString(2));
-                }
                 return;
             case "setZoom":
                 if (args != null) {
@@ -141,25 +133,6 @@ public class YamapViewManager extends ViewGroupManager<YamapView> {
 
     private void fitAllMarkers(View view) {
         castToYaMapView(view).fitAllMarkers();
-    }
-
-    private void findRoutes(View view, ReadableArray jsPoints, ReadableArray jsVehicles, String id) {
-        if (jsPoints != null) {
-            ArrayList<Point> points = new ArrayList<>();
-            for (int i = 0; i < jsPoints.size(); ++i) {
-                ReadableMap point = jsPoints.getMap(i);
-                if (point != null) {
-                    points.add(new Point(point.getDouble("lat"), point.getDouble("lon")));
-                }
-            }
-            ArrayList<String> vehicles = new ArrayList<>();
-            if (jsVehicles != null) {
-                for (int i = 0; i < jsVehicles.size(); ++i) {
-                    vehicles.add(jsVehicles.getString(i));
-                }
-            }
-            castToYaMapView(view).findRoutes(points, vehicles, id);
-        }
     }
 
     // props

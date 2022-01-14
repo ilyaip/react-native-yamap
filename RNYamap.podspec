@@ -14,7 +14,5 @@ Pod::Spec.new do |s|
     # s.requires_arc = true
 
     s.dependency "React"
-    s.dependency "YandexMapKit"
-    s.dependency 'YandexMapKitDirections'
-    s.dependency "YandexMapKitTransport"
+    s.dependency "YandexMapKit", "3.4"
 end
