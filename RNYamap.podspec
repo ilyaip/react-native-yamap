@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
 
     s.dependency "React"
     s.dependency "YandexMapsMobile", "4.0.0-full"
+
 end
