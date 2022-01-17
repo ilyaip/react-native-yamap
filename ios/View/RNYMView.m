@@ -1,16 +1,9 @@
+#import <React/RCTConvert.h>
 #import <React/RCTComponent.h>
 #import <React/UIView+React.h>
-#import <React/RCTConvert.h>
 
 #import <MapKit/MapKit.h>
-#import <YandexMapKit/YMKMapKitFactory.h>
-#import <YandexMapKit/YMKMapView.h>
-#import <YandexMapKit/YMKBoundingBox.h>
-#import <YandexMapKit/YMKCameraPosition.h>
-#import <YandexMapKit/YMKVisibleRegion.h>
-#import <YandexMapKit/YMKMap.h>
-#import <YandexMapKit/YMKMapObjectCollection.h>
-#import <YandexMapKit/YMKGeoObjectCollection.h>
+@import YandexMapsMobile;
 
 
 #ifndef MAX
@@ -19,7 +12,6 @@
 
 #import "YamapMarkerView.h"
 #import "RNYMView.h"
-
 
 #define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
 
@@ -62,10 +54,6 @@
     return icon;
 }
 
--(void)onReceiveNativeEvent:(NSDictionary *)response {
-    if (self.onRouteFound) self.onRouteFound(response);
-}
-
 -(void) removeAllSections {
     [self.mapWindow.map.mapObjects clear];
 }
@@ -92,7 +80,7 @@
         @"azimuth": [NSNumber numberWithFloat:position.azimuth],
         @"tilt": [NSNumber numberWithFloat:position.tilt],
         @"zoom": [NSNumber numberWithFloat:position.zoom],
-        @"isFinished": [NSNumber numberWithBool:finished],
+        @"isFinished":  @(finished),
         @"point": @{
                 @"lat": [NSNumber numberWithDouble:position.target.latitude],
                 @"lon": [NSNumber numberWithDouble:position.target.longitude],
@@ -100,7 +88,7 @@
     };
 }
 
--(NSDictionary*) regionToJSON:(YMKVisibleRegion*) region {
+-(NSDictionary*) visibleRegionToJSON:(YMKVisibleRegion*) region {
     return @{
         @"topLeft": @{
                 @"lat": [NSNumber numberWithDouble:region.topLeft.latitude],
@@ -133,7 +121,7 @@
 
 -(void) emitVisibleRegionToJS:(NSString*) _id {
     YMKVisibleRegion* region = self.mapWindow.map.visibleRegion;
-    NSDictionary* visibleRegion = [self regionToJSON:region];
+    NSDictionary* visibleRegion = [self visibleRegionToJSON:region];
     NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:visibleRegion];
     [response setValue:_id forKey:@"id"];
     if (self.onVisibleRegionReceived) {
@@ -142,14 +130,12 @@
 }
 
 
-- (void)onCameraPositionChangedWithMap:(nonnull YMKMap *)map
-    cameraPosition:(nonnull YMKCameraPosition *)cameraPosition
-cameraUpdateSource:(YMKCameraUpdateSource)cameraUpdateSource
+-(void) onCameraPositionChangedWithMap:(nonnull YMKMap *)map
+                        cameraPosition:(nonnull YMKCameraPosition *)cameraPosition
+                    cameraUpdateReason:(YMKCameraUpdateReason)cameraUpdateReason
                               finished:(BOOL)finished {
-    NSDictionary* position = [self cameraPositionToJSON:cameraPosition finished:finished];
-    NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:position];
     if (self.onCameraPositionChange) {
-        self.onCameraPositionChange(response);
+        self.onCameraPositionChange([self cameraPositionToJSON:cameraPosition finished:finished]);
     }
 }
 

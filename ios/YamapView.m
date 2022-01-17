@@ -45,11 +45,9 @@ RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyFillColor, NSNumber, RNYMView) {
     [view setUserLocationAccuracyFillColor: [RCTConvert UIColor:json]];
 }
 
-
 RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeColor, NSNumber, RNYMView) {
     [view setUserLocationAccuracyStrokeColor: [RCTConvert UIColor:json]];
 }
-
 
 RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeWidth, NSNumber, RNYMView) {
     [view setUserLocationAccuracyStrokeWidth: [json floatValue]];
