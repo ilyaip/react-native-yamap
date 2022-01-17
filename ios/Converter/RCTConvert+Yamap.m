@@ -1,6 +1,6 @@
 #import <React/RCTConvert.h>
 #import <Foundation/Foundation.h>
-#import <YandexMapKit/YMKMapKitFactory.h>
+@import YandexMapsMobile;
 
 @interface RCTConvert(Yamap)
 
@@ -14,14 +14,6 @@
     return target;
 }
 
-+ (NSArray *)Vehicles:(id)json {
-    return [self NSArray:json];
-}
-
-+ (NSDictionary *)RouteColors:(id)json {
-    return [self NSDictionary:json];
-}
-
 + (NSMutableArray<YMKPoint *> *)Points:(id)json {
     NSArray *parsedArray = [self NSArray:json];
     NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -32,15 +24,6 @@
         [result addObject:point];
     }
     return result;
-}
-
-+(NSMutableDictionary *)RouteDict:(id)json {
-    json = [self NSDictionary:json];
-    NSMutableDictionary* route = [[NSMutableDictionary alloc] init];
-    [route setObject:[YMKPoint pointWithLatitude:[self double:json[@"start"][@"lat"]] longitude:[self double:json[@"start"][@"lon"]]] forKey:@"start"];
-    [route setObject:[YMKPoint pointWithLatitude:[self double:json[@"end"][@"lat"]] longitude:[self double:json[@"end"][@"lon"]]] forKey:@"end"];
-
-    return route;
 }
 
 + (float)Zoom:(id)json {

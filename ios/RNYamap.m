@@ -1,5 +1,5 @@
 #import "RNYamap.h"
-#import <YandexMapKit/YMKMapKitFactory.h>
+@import YandexMapsMobile;
 
 @implementation yamap
 
@@ -29,22 +29,6 @@ static NSString * _selectedMarkerIcon;
 
 RCT_EXPORT_METHOD(init: (NSString *) apiKey) {
     [self initWithKey: apiKey];
-}
-
-RCT_EXPORT_METHOD(setLocale: (NSString *) locale successCallback:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
-    [YRTI18nManagerFactory setLocaleWithLocale:locale];
-    successCb(@[]);
-}
-
-RCT_EXPORT_METHOD(resetLocale:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
-    [YRTI18nManagerFactory setLocaleWithLocale:nil];
-    successCb(@[]);
-}
-
-RCT_EXPORT_METHOD(getLocale:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
-    [YRTI18nManagerFactory getLocaleWithLocaleDelegate:^(NSString * _Nonnull locale) {
-        successCb(@[locale]);
-    }];
 }
 
 RCT_EXPORT_MODULE()

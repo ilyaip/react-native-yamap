@@ -1,30 +1,9 @@
+#import <React/RCTConvert.h>
 #import <React/RCTComponent.h>
 #import <React/UIView+React.h>
-#import <React/RCTConvert.h>
 
 #import <MapKit/MapKit.h>
-#import <YandexMapKit/YMKMapKitFactory.h>
-#import <YandexMapKit/YMKMapView.h>
-#import <YandexMapKit/YMKBoundingBox.h>
-#import <YandexMapKit/YMKCameraPosition.h>
-#import <YandexMapKit/YMKCircle.h>
-#import <YandexMapKit/YMKPolyline.h>
-#import <YandexMapKit/YMKPolylineMapObject.h>
-#import <YandexMapKit/YMKMap.h>
-#import <YandexMapKit/YMKMapObjectCollection.h>
-#import <YandexMapKit/YMKGeoObjectCollection.h>
-#import <YandexMapKit/YMKSubpolylineHelper.h>
-#import <YandexMapKit/YMKPlacemarkMapObject.h>
-#import <YandexMapKitTransport/YMKMasstransitSession.h>
-#import <YandexMapKitTransport/YMKMasstransitRouter.h>
-#import <YandexMapKitTransport/YMKPedestrianRouter.h>
-#import <YandexMapKitTransport/YMKMasstransitRouteStop.h>
-#import <YandexMapKitTransport/YMKMasstransitOptions.h>
-#import <YandexMapKitTransport/YMKMasstransitSection.h>
-#import <YandexMapKitTransport/YMKMasstransitSectionMetadata.h>
-#import <YandexMapKitTransport/YMKMasstransitTransport.h>
-#import <YandexMapKitTransport/YMKMasstransitWeight.h>
-#import <YandexMapKitTransport/YMKTimeOptions.h>
+@import YandexMapsMobile;
 
 #ifndef MAX
 #import <NSObjCRuntime.h>
@@ -162,6 +141,7 @@
         [self setChildView];
     });
 }
+
 - (void)insertReactSubview:(UIView*) subview atIndex:(NSInteger)atIndex {
     [_reactSubviews insertObject:subview atIndex: atIndex];
     [super insertReactSubview:subview atIndex:atIndex];

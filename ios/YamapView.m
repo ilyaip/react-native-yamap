@@ -15,7 +15,7 @@
 RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"onRouteFound", @"onCameraPositionReceived", @"onCameraPositionChange", @"onMapPress", @"onMapLongPress", @"onVisibleRegionReceived"];
+    return @[@"onCameraPositionReceived", @"onCameraPositionChange", @"onMapPress", @"onMapLongPress", @"onVisibleRegionReceived"];
 }
 
 - (instancetype)init {
@@ -35,7 +35,6 @@ RCT_EXPORT_MODULE()
 }
 
 // props
-RCT_EXPORT_VIEW_PROPERTY(onRouteFound, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onCameraPositionReceived, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onVisibleRegionReceived, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onCameraPositionChange, RCTBubblingEventBlock)
@@ -46,11 +45,9 @@ RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyFillColor, NSNumber, RNYMView) {
     [view setUserLocationAccuracyFillColor: [RCTConvert UIColor:json]];
 }
 
-
 RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeColor, NSNumber, RNYMView) {
     [view setUserLocationAccuracyStrokeColor: [RCTConvert UIColor:json]];
 }
-
 
 RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeWidth, NSNumber, RNYMView) {
     [view setUserLocationAccuracyStrokeWidth: [json floatValue]];
@@ -89,24 +86,6 @@ RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag) {
             return;
         }
         [view fitAllMarkers];
-    }];
-}
-
-RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag json:(NSDictionary*) json) {
-    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNYMView *view = (RNYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
-            RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
-            return;
-        }
-        NSArray<YMKPoint*>* points = [RCTConvert Points:json[@"points"]];
-        NSMutableArray<YMKRequestPoint*>* requestPoints = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [points count]; ++i) {
-            YMKRequestPoint * requestPoint = [YMKRequestPoint requestPointWithPoint:[points objectAtIndex:i] type: YMKRequestPointTypeWaypoint pointContext:nil];
-            [requestPoints addObject:requestPoint];
-        }
-        NSArray<NSString*>* vehicles = [RCTConvert Vehicles:json[@"vehicles"]];
-        [view findRoutes: requestPoints vehicles: vehicles withId:json[@"id"]];
     }];
 }
 
