@@ -1,6 +1,6 @@
 #import <React/RCTConvert.h>
 #import <Foundation/Foundation.h>
-@import YandexMapsMobile;
+#import <YandexMapKit/YMKMapKitFactory.h>
 
 @interface RCTConvert(Yamap)
 

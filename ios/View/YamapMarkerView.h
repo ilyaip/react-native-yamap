@@ -1,7 +1,8 @@
 #ifndef YamapMarkerView_h
 #define YamapMarkerView_h
 #import <React/RCTComponent.h>
-@import YandexMapsMobile;
+#import <YandexMapKit/YMKPolygonMapObject.h>
+#import <YandexMapKit/YMKPoint.h>
 
 @class RCTBridge;
 
