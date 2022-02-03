@@ -1,9 +1,17 @@
-#import <React/RCTConvert.h>
 #import <React/RCTComponent.h>
 #import <React/UIView+React.h>
+#import <React/RCTConvert.h>
 
 #import <MapKit/MapKit.h>
-@import YandexMapsMobile;
+#import <YandexMapKit/YMKMapKitFactory.h>
+#import <YandexMapKit/YMKMapView.h>
+#import <YandexMapKit/YMKBoundingBox.h>
+#import <YandexMapKit/YMKCameraPosition.h>
+#import <YandexMapKit/YMKMap.h>
+#import <YandexMapKit/YMKMapObjectCollection.h>
+#import <YandexMapKit/YMKGeoObjectCollection.h>
+#import <YandexMapKit/YMKPlacemarkMapObject.h>
+
 
 #ifndef MAX
 #import <NSObjCRuntime.h>
@@ -141,7 +149,6 @@
         [self setChildView];
     });
 }
-
 - (void)insertReactSubview:(UIView*) subview atIndex:(NSInteger)atIndex {
     [_reactSubviews insertObject:subview atIndex: atIndex];
     [super insertReactSubview:subview atIndex:atIndex];

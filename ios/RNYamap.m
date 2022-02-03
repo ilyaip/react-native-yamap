@@ -1,5 +1,5 @@
 #import "RNYamap.h"
-@import YandexMapsMobile;
+#import <YandexMapKit/YMKMapKitFactory.h>
 
 @implementation yamap
 
