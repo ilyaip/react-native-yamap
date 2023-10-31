@@ -8,18 +8,26 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "homepage": "https://github.com/volga-volga/react-native-yamap",
-  "keywords": ["react-native", "mapkit", "yandex", "yamap", "polygon", "polyline", "marker", "geocoder"],
+  "keywords": [
+    "react-native",
+    "mapkit",
+    "yandex",
+    "yamap",
+    "polygon",
+    "polyline",
+    "marker",
+    "geocoder"
+  ],
   "author": "Nikita Sirotkin",
   "license": "",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "typescript": "^3.8.3",
-    "@types/react": "*",
-    "@types/react-native": "*"
+    "@types/react": "^16.11.0",
+    "@types/react-native": "^0.62.2"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
+    "react": "16.11.0",
+    "react-native": "0.62.2"
   }
 }
